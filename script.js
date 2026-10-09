@@ -10,9 +10,10 @@ function Book(id, title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    // this.info = function() {
-    //     return(`ID - ${this.id} | ${this.title} by ${this.author}, ${this.pages} pages, ${(this.read === true) ? "read" : "not read yet"}`);
-    // };
+};
+
+Book.prototype.changeRead = function(){
+    this.read = !this.read;
 };
 
 function addBookToLibrary(title, author, pages, read) {
@@ -50,18 +51,26 @@ function appendBook() {
         deleteButton.textContent = "X";
         card.appendChild(deleteButton);
 
+        const changeReadButton = document.createElement("button");
+        changeReadButton.classList.add("changeReadButton");
+        changeReadButton.textContent = "Update read status";
+        card.appendChild(changeReadButton);
+
         card.dataset.bookId = book.id;
-        
+
         libraryDiv.appendChild(card);
     
         deleteButton.addEventListener("click", deleteButtonClick);
-
-        function deleteButtonClick(e) {
-            console.log(book.id);
+        function deleteButtonClick() {
             const index = myLibrary.findIndex(book => book.id === card.dataset.bookId);
             myLibrary.splice(index, 1);
             appendBook();
         };
+
+        changeReadButton.addEventListener("click", function(){
+            book.changeRead();
+            appendBook();
+        });
     };
 };
 
