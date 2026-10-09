@@ -23,6 +23,8 @@ function addBookToLibrary(title, author, pages, read) {
 
 const libraryDiv = document.querySelector("#library");
 function appendBook() {
+    libraryDiv.replaceChildren();
+
     for (const book of myLibrary) {
         const card = document.createElement("div");
         card.classList.add("card");
@@ -43,9 +45,25 @@ function appendBook() {
         read.textContent = book.read;
         card.appendChild(read);
 
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("deleteButton");
+        deleteButton.textContent = "X";
+        card.appendChild(deleteButton);
+
+        card.dataset.bookId = book.id;
+        
         libraryDiv.appendChild(card);
-    }
-}
+    
+        deleteButton.addEventListener("click", deleteButtonClick);
+
+        function deleteButtonClick(e) {
+            console.log(book.id);
+            const index = myLibrary.findIndex(book => book.id === card.dataset.bookId);
+            myLibrary.splice(index, 1);
+            appendBook();
+        };
+    };
+};
 
 const submitButton = document.querySelector("#submitButton");
 submitButton.addEventListener("click", buttonClick);
