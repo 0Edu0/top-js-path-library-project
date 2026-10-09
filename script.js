@@ -21,3 +21,32 @@ function addBookToLibrary(title, author, pages, read) {
     myLibrary.push(newBook);
 };
 
+addBookToLibrary("testTitle", "testAuthor", 100, true);
+addBookToLibrary("testTitle2", "testAuthor2", 200, true);
+addBookToLibrary("testTitle3", "testAuthor3", 300, false);
+
+
+const libraryDiv = document.querySelector("#library");
+
+for (const book of myLibrary) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    const title = document.createElement("p");
+    title.textContent = book.title;
+    card.appendChild(title);
+
+    const author = document.createElement("p");
+    author.textContent = book.author;
+    card.appendChild(author);
+
+    const pages = document.createElement("p");
+    pages.textContent = book.pages;
+    card.appendChild(pages);
+
+    const read = document.createElement("p");
+    read.textContent = book.read;
+    card.appendChild(read);
+
+    libraryDiv.appendChild(card);
+}
