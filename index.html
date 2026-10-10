@@ -1,34 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <button command="show-modal" commandfor="my-dialog">Add a book</button>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <button command="show-modal" commandfor="my-dialog" id="newBookButton">New Book</button>
 
     <dialog id="my-dialog">
         <form>
-            <label for="title">Title</label>
+            <label for="title">Book's Title</label>
             <input type="text" name="title" id="title">
-
-            <label for="author">Author</label>
+            <label for="author">Author's Name</label>
             <input type="text" name="author" id="author">
-
-            <label for="pages">Number of pages</label>
+            <label for="pages">Number of Pages</label>
             <input type="number" name="pages" id="pages">
-
-            <label for="read">Already read?</label>
+            <label for="read">Have you read this book?</label>
             <input type="checkbox" name="read" id="read">
-        
             <button type="submit" id="submitButton">Submit</button>
         </form>
-    <button commandfor="my-dialog" command="close">Close</button>
+      <button commandfor="my-dialog" command="close">Close</button>
     </dialog>
 
     <div id="library"></div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

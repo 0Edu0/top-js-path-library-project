@@ -10,9 +10,9 @@ function Book(id, title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-};
+}
 
-Book.prototype.changeRead = function(){
+Book.prototype.toggleRead = function(){
     this.read = !this.read;
 };
 
@@ -20,74 +20,63 @@ function addBookToLibrary(title, author, pages, read) {
     const id = crypto.randomUUID();
     const newBook = new Book(id, title, author, pages, read);
     myLibrary.push(newBook);
-};
+}
 
-const libraryDiv = document.querySelector("#library");
-function appendBook() {
-    libraryDiv.replaceChildren();
+const library = document.querySelector("#library");
+function showBooks() {
+    library.replaceChildren();
 
     for (const book of myLibrary) {
-        const card = document.createElement("div");
-        card.classList.add("card");
+        const newCard = document.createElement("div");
+        newCard.classList = "card";
+        newCard.dataset.cardId = book.id;
 
-        const title = document.createElement("p");
+        const title = document.createElement("h2");
         title.textContent = book.title;
-        card.appendChild(title);
+        newCard.appendChild(title);
 
         const author = document.createElement("p");
         author.textContent = book.author;
-        card.appendChild(author);
+        newCard.appendChild(author);
 
         const pages = document.createElement("p");
-        pages.textContent = book.pages;
-        card.appendChild(pages);
+        pages.textContent = parseInt(book.pages);
+        newCard.appendChild(pages)
 
         const read = document.createElement("p");
         read.textContent = book.read;
-        card.appendChild(read);
+        newCard.appendChild(read);
 
         const deleteButton = document.createElement("button");
-        deleteButton.classList.add("deleteButton");
-        deleteButton.textContent = "X";
-        card.appendChild(deleteButton);
+        deleteButton.textContent = "Delete book";
+        newCard.append(deleteButton);
 
-        const changeReadButton = document.createElement("button");
-        changeReadButton.classList.add("changeReadButton");
-        changeReadButton.textContent = "Update read status";
-        card.appendChild(changeReadButton);
+        const readStatusButton = document.createElement("button");
+        readStatusButton.textContent = "Update read status";
+        newCard.append(readStatusButton);
 
-        card.dataset.bookId = book.id;
+        readStatusButton.addEventListener("click", function(){
+            book.toggleRead();
+            showBooks();
+        })
 
-        libraryDiv.appendChild(card);
-    
-        deleteButton.addEventListener("click", deleteButtonClick);
-        function deleteButtonClick() {
-            const index = myLibrary.findIndex(book => book.id === card.dataset.bookId);
-            myLibrary.splice(index, 1);
-            appendBook();
-        };
+        deleteButton.addEventListener("click", function(){
+            const matchId = myLibrary.findIndex((b) => b.id === book.id);
+            myLibrary.splice(matchId, 1);
+            showBooks();
+        })
 
-        changeReadButton.addEventListener("click", function(){
-            book.changeRead();
-            appendBook();
-        });
-    };
-};
+        library.appendChild(newCard);
+    }
+}
 
 const submitButton = document.querySelector("#submitButton");
-submitButton.addEventListener("click", buttonClick);
-const titleInput = document.querySelector("#title");
-const authorInput = document.querySelector("#author");
-const pagesInput = document.querySelector("#pages");
-const readInput = document.querySelector("#read");
-function buttonClick(e) {
+submitButton.addEventListener("click", function (e) {
     e.preventDefault();
-
-    const title = titleInput.value;
-    const author = authorInput.value;
-    const pages = parseInt(pagesInput.value);
-    const read = readInput.checked;
-
-    addBookToLibrary(title, author, pages, read);
-    appendBook();
-};
+    const titleInput = document.querySelector("#title").value;
+    const authorInput = document.querySelector("#author").value;
+    const pagesInput = document.querySelector("#pages").value;
+    const readInput = document.querySelector("#read").checked;
+    addBookToLibrary(titleInput, authorInput, pagesInput, readInput);
+    showBooks();
+})
