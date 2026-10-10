@@ -1,0 +1,32 @@
+:root {
+    --main-color: #1B4436;
+    --accent-color: #88A33B;
+    --bg-color: #F9E4C5;
+}
+
+html {
+    font-family: Arial, 'Times New Roman', Times, serif;
+    background-color: var(--bg-color);
+}
+
+button,
+button:focus {
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    padding: 15px;
+}
+
+button:hover {
+    cursor: pointer;
+    box-shadow: 3px 3px white;
+}
+
+.library{
+    display: flex;
+}
+
